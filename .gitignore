@@ -160,4 +160,4 @@ cython_debug/
 .idea/
 mnist_test.csv
 mnist_train.csv
-model_v0.1.0.joblib
+models/model_v0.1.0.joblib

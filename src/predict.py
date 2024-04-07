@@ -9,6 +9,6 @@ def model_predict(X_test):
 
 
 def evaluate_model(X_test, y_test):
-    y_pred = mnistClassifier.predict(X_test)
-    accuracy = accuracy_score(y_test, y_pred)
-    print(f"Model Accuarcy: {accuracy}")
+        y_pred = mnistClassifier.predict(X_test)
+        accuracy = accuracy_score(y_test, y_pred)
+        print(f"Model Accuarcy: {accuracy}")

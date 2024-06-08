@@ -1,6 +1,6 @@
 from sklearn.metrics import accuracy_score
 from joblib import load
-from matplotlib import pyplot as plt
+import numpy as np
 
 mnistClassifier = load("../models/model_v0.1.0.joblib")
 
@@ -10,7 +10,5 @@ def model_predict(X_test):
     return mnistClassifier.predict(X_test)
 
 
-def evaluate_model(X_test, y_test):
-        y_pred = mnistClassifier.predict(X_test)
-        accuracy = accuracy_score(y_test, y_pred)
-        print(f"Model Accuarcy: {accuracy}")
+def pred_probability(X_test):
+        return format(np.max(mnistClassifier.predict_proba(X_test), axis=1)[0], '.4f')

@@ -2,11 +2,9 @@ from src.predict import model_predict
 from flask import Flask, request, jsonify, render_template
 import numpy as np
 from PIL import Image
-
 import io
 
 app = Flask(__name__)
-
 
 @app.route('/')
 def home():
@@ -19,21 +17,31 @@ def predict():
 
     file = request.files['file']
 
-    # Read the image file
-    img = Image.open(file).convert('L')  # Convert to grayscale
-    img = img.resize((28, 28))  # Resize to 28x28 pixels
-    img_array = np.array(img)
+    try:
+        # Read the image file
+        img = Image.open(file).convert('L')  # Convert to grayscale
+        img = img.resize((28, 28))  # Resize to 28x28 pixels
+        img_array = np.array(img)
 
-    # Normalize the image array
-    img_array = img_array / 255.0
-    img_array = img_array.reshape(-1, -1)  # Reshape for the model
+        # Normalize the image array
+        img_array = img_array / 255.0
 
-    # Make a prediction
-    prediction = model_predict(img_array)
-    predicted_class = prediction[0]
+        # Flatten the array to 1D (784,)
+        img_array = img_array.reshape(1, -1)  # Reshape for the model
+
+        # Make a prediction
+        prediction, pred_proba = model_predict(img_array)
+
+        predicted_class = prediction[0]
+        pred_probability = pred_proba[0]
 
 
-    return jsonify({'Model Prediction': int(predicted_class)})
+        return jsonify({'predicted_class': int(predicted_class),
+                        'pred_probability': float(pred_probability)})
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 
 
 if __name__ == '__main__':

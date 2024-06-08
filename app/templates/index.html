@@ -6,6 +6,7 @@
     <title>MNIST Digit Classifier</title>
     <style>
         body {
+	        background-color: gray;
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
@@ -14,11 +15,12 @@
             flex-direction: column;
         }
         .container {
+	        background-color: darkslategrey;
             text-align: center;
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
-            border: 1px solid #ddd;
+            border: 2px solid #070506;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
@@ -36,7 +38,7 @@
             cursor: pointer;
         }
         button:hover {
-            background-color: #0056b3;
+            background-color: darkblue;
         }
         #result {
             margin-top: 20px;
@@ -55,15 +57,15 @@
 
     <script>
         function predict() {
-            var fileInput = document.getElementById('imageUpload');
-            var file = fileInput.files[0];
+            const fileInput = document.getElementById('imageUpload');
+            const file = fileInput.files[0];
 
             if (!file) {
                 alert('Please select an image file first.');
                 return;
             }
 
-            var formData = new FormData();
+            const formData = new FormData();
             formData.append('file', file);
 
             fetch('/predict', {
@@ -73,9 +75,10 @@
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
-                    document.getElementById('result').textContent = 'Error: ' + data.error;
+                    document.getElementById('result').innerHTML = 'Error: ' + data.error;
                 } else {
-                    document.getElementById('result').textContent = 'Predicted Class: ' + data.predicted_class;
+                    document.getElementById('result').innerHTML = 'Predicted Class: ' + data.predicted_class
+	                + '<br/>Prediction Probability: ' + (data.pred_probability * 100).toFixed(2) + '%';
                 }
             })
             .catch(error => {

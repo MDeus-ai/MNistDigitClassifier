@@ -162,3 +162,4 @@ mnist_test.csv
 mnist_train.csv
 models/model_v0.1.0.joblib
 src/test.py
+src/test.ipynb

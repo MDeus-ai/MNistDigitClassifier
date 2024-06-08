@@ -1,7 +1,9 @@
 from sklearn.metrics import accuracy_score
 from joblib import load
+from matplotlib import pyplot as plt
 
 mnistClassifier = load("../models/model_v0.1.0.joblib")
+
 
 """The Prediction Function"""
 def model_predict(X_test):
